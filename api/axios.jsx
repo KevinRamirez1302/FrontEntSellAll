@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const currentHostname = window.location.hostname;
 
-const productionBaseURL = 'https://server-mern-sell-all.vercel.app/';
+const productionBaseURL = 'https://server-mern-sell-all.vercel.app';
 
 const localBaseURL = 'http://localhost:3000/';
 

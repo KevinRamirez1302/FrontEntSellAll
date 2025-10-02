@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import instance from '../../../api/axios';
 import { Card } from '../CardProduct/Card';
 import { Stack, Select } from '@chakra-ui/react';
 
@@ -8,14 +8,13 @@ export const AllProducts = () => {
   const [category, setCategory] = useState('');
 
   useEffect(() => {
-    axios
-      .get('http://localhost:3000/allProducts')
-      .then((data) => setData(data.data));
-  }, []);
-  useEffect(() => {
-    axios
-      .get(`http://localhost:3000/allProducts/category/${category}`)
-      .then((data) => setData(data.data));
+    if (!category) {
+      instance.get('allProducts').then((data) => setData(data.data));
+    } else {
+      instance
+        .get(`allProducts/category/${category}`)
+        .then((data) => setData(data.data));
+    }
   }, [category]);
 
   return (

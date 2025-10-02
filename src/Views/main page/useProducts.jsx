@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import instance from '../../../api/axios';
 
 const useProducts = () => {
   const [products, setProducts] = useState([]);
@@ -9,7 +9,7 @@ const useProducts = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/getProducts');
+        const response = await instance.get('getProducts');
         setProducts(response.data);
       } catch (err) {
         setError(err);

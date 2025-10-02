@@ -8,6 +8,13 @@ export const AllProducts = () => {
   const [category, setCategory] = useState('');
 
   useEffect(() => {
+    if (!category) {
+      instance.get('allProducts').then((data) => setData(data.data));
+    } else {
+      instance
+        .get(`allProducts/category/${category}`)
+        .then((data) => setData(data.data));
+    }
     instance.get('/allProducts').then((data) => setData(data.data));
   }, []);
   useEffect(() => {

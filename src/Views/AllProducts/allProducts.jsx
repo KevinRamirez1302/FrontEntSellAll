@@ -17,11 +17,6 @@ export const AllProducts = () => {
     }
     instance.get('/allProducts').then((data) => setData(data.data));
   }, []);
-  useEffect(() => {
-    instance
-      .get(`/allProducts/category/${category}`)
-      .then((data) => setData(data.data));
-  }, [category]);
 
   return (
     <>

@@ -99,29 +99,44 @@ export const ShopCarProvider = ({ children }) => {
   // Eliminar Producto del Carrito
   const deleteProduct = async (id) => {
     try {
-      await deleteItem(id);
+      const res = await deleteItem(id);
 
       // 1. Mostrar Toast
       toast({
         title: `Producto Eliminado`,
-        status: 'error',
+        status: 'success',
         isClosable: true,
       });
 
-      // 2. ACTUALIZAR la lista de productos
-      // Filtramos localmente para una actualización rápida (optimista)
-      setAllProduct((prevProducts) => prevProducts.filter((p) => p.id !== id));
+      // 2. ACTIVAR actualización desde el servidor para evitar discrepancias
+      // (más seguro que filtrar localmente, y evita bugs por _id vs id)
+      await fetchProducts();
 
-      // Si la optimización local no funciona, se podría llamar a fetchProducts()
-      // para una actualización completa desde el servidor.
+      // Log response for debugging (helps detect if server cleared auth cookie)
+      // eslint-disable-next-line no-console
+      console.log('deleteItem response:', res && res.status ? res.status : res);
     } catch (error) {
+      // If the request is unauthorized, surface a clear toast. Do NOT mutate
+      // auth state here; the AuthProvider is responsible for session state.
+      // Logging the full error helps debugging server behavior (e.g., Set-Cookie).
+      // eslint-disable-next-line no-console
       console.error('Error al eliminar producto:', error);
-      toast({
-        title: 'Error al eliminar',
-        description: 'No se pudo eliminar el producto del carrito.',
-        status: 'error',
-        isClosable: true,
-      });
+
+      if (error?.response?.status === 401) {
+        toast({
+          title: 'No autorizado',
+          description: 'Tu sesión no está autorizada para eliminar este item.',
+          status: 'warning',
+          isClosable: true,
+        });
+      } else {
+        toast({
+          title: 'Error al eliminar',
+          description: 'No se pudo eliminar el producto del carrito.',
+          status: 'error',
+          isClosable: true,
+        });
+      }
     }
   };
 

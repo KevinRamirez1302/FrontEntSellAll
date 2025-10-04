@@ -1,121 +1,69 @@
 import { Input, Button, Stack, Select } from '@chakra-ui/react';
-import Mastercard from '/img/mastercard.png';
-import Visa from '/img/visa.png';
-import Binance from '/img/Binance-pay.jpg';
-import American from '/img/american-express.png';
+import { FaWallet } from 'react-icons/fa'; // Icono para el encabezado
 import { useState } from 'react';
+import { CardPaymentForm } from './CardPayment';
 
 // formulario de la tarjeta
-const CardPaymentForm = ({ cardNumber, setCardNumber }) => {
-  const getCardType = (number) => {
-    if (!number || number.length < 1) return null;
-    const firstDigit = number.toString().charAt(0);
-    if (firstDigit === '2') return Mastercard;
-    if (firstDigit === '4') return Visa;
-    return null;
+
+export const Payment = () => {
+  const [cardNumber, setCardNumber] = useState('');
+  const [method, setMethod] = useState('Card'); // Valor por defecto a 'Card'
+
+  const handlePay = () => {
+    console.log('Procesando pago con tarjeta:', cardNumber);
+    // Lógica de validación y envío a la pasarela de pago
   };
 
   return (
-    <div className="flex flex-col w-full sm:w-4/5">
-      <Input
-        margin={2}
-        variant="filled"
-        width={'auto'}
-        maxLength={16}
-        placeholder="Card Number"
-        focusBorderColor="purple.400"
-        type="text" // Cambiado a text
-        onChange={(e) => setCardNumber(e.target.value)}
-      />
-      {getCardType(cardNumber) && (
-        <img
-          className="w-8 ml-2"
-          src={getCardType(cardNumber)}
-          alt="Card logo"
-        />
-      )}
-      <div className="flex">
-        <Input
-          variant="filled"
-          margin={2}
-          width={'auto'}
-          placeholder="Expiracion"
-          maxLength={5}
-          focusBorderColor="purple.400"
-          type="text"
-        />
-        <Input
-          variant="filled"
-          margin={2}
-          maxLength={3}
-          width={'auto'}
-          placeholder="CVC"
-          focusBorderColor="purple.400"
-          type="text" // Cambiado a text
-        />
-      </div>
-      <Input
-        variant="filled"
-        margin={2}
-        width={'auto'}
-        placeholder="Name"
-        focusBorderColor="purple.400"
-        type="text" // Cambiado a text
-      />
-      <Input
-        variant="filled"
-        margin={2}
-        width={'auto'}
-        placeholder="Adress"
-        focusBorderColor="purple.400"
-        type="text" // Cambiado a text
-      />
-      <Button className="w-full mt-5" colorScheme="purple" type="submit">
-        Pay
-      </Button>
-      <div className="w-full mt-5 gap-3 flex justify-center items-center">
-        <img className="w-10" src={Mastercard} alt="" />
-        <img className="w-10" src={Visa} alt="" />
-        <img className="w-10" src={American} alt="" />
-        <img className="w-10" src={Binance} alt="" />
-      </div>
-    </div>
-  );
-};
+    <section className="w-full flex items-center justify-center py-12 md:py-20 bg-gray-50">
+      {/* Contenedor centralizado y con bordes redondeados */}
+      <div className="w-full max-w-xl bg-white p-6 sm:p-10 rounded-xl shadow-2xl border-t-4 border-purple-500">
+        <h2 className="text-center mb-6 text-3xl font-bold text-gray-900 flex items-center justify-center">
+          <FaWallet className="mr-3 text-purple-600" /> Proceso de Pago
+        </h2>
 
-export const Payment = () => {
-  const [cardNumber, setCardNumber] = useState(''); // Estado inicial como string
-  const [method, setMethod] = useState('');
-
-  return (
-    <section className="w-full h-92 flex items-center justify-center">
-      <div className="w-4/5 md:w-3/5 flex flex-col items-center justify-center">
         <form
-          className="w-4/5 md:w-3/5 flex flex-col items-center justify-center h-80"
-          action=""
+          onSubmit={(e) => {
+            e.preventDefault(); /* handlePay se llama en el botón */
+          }}
         >
-          <h2 className="text-center mb-5 text-xl font-bold text-violet-800">
-            Payment
-          </h2>
-          <Stack className="mb-10">
-            <Select onChange={(e) => setMethod(e.target.value)}>
-              <option value="Card">Credit/Debit Card</option>
+          {/* Selector de Método de Pago */}
+          <Stack spacing={3} className="mb-8">
+            <label className="font-semibold text-gray-700">
+              Seleccionar Método de Pago:
+            </label>
+            <Select
+              value={method}
+              onChange={(e) => setMethod(e.target.value)}
+              focusBorderColor="purple.500"
+              size="lg" // Select más grande para mejor UX
+            >
+              <option value="Card">Tarjeta de Crédito/Débito</option>
               <option value="Binance">Binance Pay</option>
             </Select>
           </Stack>
-          {method === 'Card' || method === '' ? (
+
+          {/* Renderizado Condicional del Formulario */}
+          {method === 'Card' ? (
             <CardPaymentForm
               cardNumber={cardNumber}
               setCardNumber={setCardNumber}
+              handlePay={handlePay}
             />
           ) : method === 'Binance' ? (
-            <button>
-              <img
-                src="https://miro.medium.com/v2/resize:fit:750/1*unqlWGZpOPa6o-E9JTbDZg.jpeg"
-                alt=""
-                className="w-44 rounded-sm"
-              />
-            </button>
+            <div className="flex flex-col items-center p-8 bg-purple-50 rounded-lg border border-purple-200">
+              <p className="text-gray-700 mb-4 font-medium">
+                Serás redirigido a la pasarela de Binance Pay.
+              </p>
+              <Button
+                colorScheme="purple"
+                className="w-full sm:w-auto"
+                size="lg"
+                onClick={() => console.log('Redirigir a Binance')}
+              >
+                Continuar con Binance Pay
+              </Button>
+            </div>
           ) : null}
         </form>
       </div>

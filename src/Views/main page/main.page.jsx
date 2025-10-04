@@ -1,9 +1,10 @@
 import { Card } from '../CardProduct/Card.jsx';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
-import { AboutuS } from '../aboutUs/aboutus.jsx';
+import { AboutUs } from '../aboutUs/aboutus.jsx';
 import { HeroSection } from './heroSection.jsx';
 import useProducts from './useProducts.jsx';
+import { TestimonialsSection } from '../testimonials/testimonials.jsx';
 
 export const MainPage = () => {
   const { products, isLoading, error } = useProducts();
@@ -228,10 +229,16 @@ export const MainPage = () => {
               </button>
             }
           >
-            {products.map((product) => (
-              <div key={product._id} className="h-full flex items-stretch">
+            {products.map(({ name, price, image, quantity, _id }) => (
+              <div key={_id} className="h-full flex items-stretch">
                 <div className="w-full max-w-sm mx-auto">
-                  <Card {...product} />
+                  <Card
+                    data={{ name, price, image, quantity, _id }}
+                    id={_id}
+                    name={name}
+                    price={price}
+                    image={image}
+                  />
                 </div>
               </div>
             ))}
@@ -261,7 +268,8 @@ export const MainPage = () => {
         {renderProductCarousel()}
       </section>
 
-      <AboutuS />
+      <AboutUs />
+      <TestimonialsSection />
     </main>
   );
 };

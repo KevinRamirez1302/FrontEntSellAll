@@ -1,47 +1,77 @@
-import comercio from '/img/comercio.jpeg'
-import { AiFillFire } from 'react-icons/ai'
+import comercio from '/img/comercio.jpeg';
+import { AiFillFire } from 'react-icons/ai';
+import { FaBolt, FaMagic } from 'react-icons/fa'; // Importamos mejores iconos para más claridad
 
-export const AboutuS = () => {
+export const AboutUs = () => {
+  // Corregido: 'AboutuS' a 'AboutUs' por convención
   return (
-    <>
-      <section className=" w-full flex flex-col lg:flex-row items-center  font-poppins">
-        <div className=" text-center lg:text-left py-10 lg:py-40 lg:px-20 lg:w-3/6 ">
-          <h1 className=" text-2xl lg:text-4xl my-6 text-purple-700 font-bold">
-            About us
+    // Sección principal con max-width, centrado y padding vertical
+    <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 md:py-24 font-sans">
+      {/* Contenedor de dos columnas con espaciado 'gap' consistente */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+        {/* Columna de Imagen (UX: poner la imagen al final en móvil para que el texto se lea primero) */}
+        <div className="order-2 md:order-1 flex justify-center">
+          <img
+            className="w-full max-w-md md:max-w-lg h-auto rounded-3xl shadow-2xl object-cover 
+                       aspect-square transform transition duration-500 hover:scale-[1.01]"
+            src={comercio}
+            alt="Ilustración de comercio electrónico o equipo"
+          />
+        </div>
+
+        {/* Columna de Contenido (Texto y Características) */}
+        <div className="order-1 md:order-2 flex flex-col justify-center text-center md:text-left">
+          {/* Título y Subtítulo */}
+          <h2 className="text-sm font-semibold uppercase tracking-widest text-purple-600 mb-3">
+            Nuestra Historia
+          </h2>
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-gray-900 mb-6">
+            Conoce a nuestro equipo{' '}
+            <span className="text-purple-700">Innovador</span>
           </h1>
-          <p className=" lg:text-xl text-gray-500">
+
+          {/* Párrafo Principal (Mejor Legibilidad) */}
+          <p className="mb-10 text-base lg:text-lg text-gray-600 leading-relaxed">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem
             necessitatibus numquam quod, minima libero esse doloribus enim error
             quas earum vero, ad vitae odio provident, quo quibusdam corrupti in
-            ea!s
+            ea!
           </p>
-          <div className=" text-left justify-center my-10  lg:my-10 flex">
-            <div className="  w-full lg:w-1/3 mx-6">
-              <div className=" items-center flex">
-                <AiFillFire size={26} color="purple" />
-                <h1 className=" font-bold">Versatil brand</h1>
+
+          {/* Contenedor de Características (UX: Agrupar en una cuadrícula pequeña) */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mt-6">
+            {/* Característica 1: Versatil brand */}
+            <div className="text-left">
+              <div className="flex items-center mb-2 justify-center md:justify-start">
+                {/* Icono más descriptivo para 'Versátil' */}
+                <FaMagic size={26} className="text-purple-600 mr-3" />
+                <h3 className="text-xl font-bold text-gray-900">
+                  Marca Versátil
+                </h3>
               </div>
-              <p className="p-2 text-gray-500">
+              <p className="text-gray-500 text-sm pl-0 md:pl-9">
                 We are crafting a digital method that subsists life across all
                 mediums.
               </p>
             </div>
-            <div className="w-full lg:w-1/3 mx-6">
-              <div className=" items-center flex">
-                <AiFillFire size={26} color="purple" />
-                <h1 className="font-bold">Digital brand</h1>
+
+            {/* Característica 2: Digital brand */}
+            <div className="text-left">
+              <div className="flex items-center mb-2 justify-center md:justify-start">
+                {/* Icono más descriptivo para 'Digital/Innovación' */}
+                <FaBolt size={26} className="text-purple-600 mr-3" />
+                <h3 className="text-xl font-bold text-gray-900">
+                  Marca Digital
+                </h3>
               </div>
-              <p className="p-2 text-gray-500">
+              <p className="text-gray-500 text-sm pl-0 md:pl-9">
                 We believe in innovation by merging primary with elaborate
                 ideas.
               </p>
             </div>
           </div>
         </div>
-        <div className=" p-10 lg:py-40 lg:px-20 lg:w-3/6">
-          <img src={comercio} alt="" />
-        </div>
-      </section>
-    </>
-  )
-}
+      </div>
+    </section>
+  );
+};

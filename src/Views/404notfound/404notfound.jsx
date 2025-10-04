@@ -1,17 +1,64 @@
+import { FaHome, FaSearch } from 'react-icons/fa';
+import img404 from '/img/notfound.jpg'; // Asegúrate de tener esta imagen en la ruta correcta
+
 export const Notfound = () => {
   return (
-    <>
-      <section className="p-6 md:flex w-full justify-center items-center">
-        <div className=" p-10 md:w-2/4 text-center">
-          <h1 className="font-sans m-2 font-bold  text-5xl">404 Not found</h1>
-          <h3 className="font-serif font-semibold text-3xl">Sorry...</h3>
+    // Contenedor principal: Centrado en la vista (pantalla completa)
+    <section className="min-h-screen flex items-center justify-center bg-gray-50 py-12 md:py-24">
+      {/* Contenedor de contenido: Ancho máximo y centrado */}
+      <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-12">
+        {/* Columna de Texto y CTA (Orden 1 en móvil/escritorio) */}
+        <div className="md:w-1/2 text-center md:text-left">
+          {/* Código de Error (Destacado y Morado) */}
+          <p className="text-6xl sm:text-7xl lg:text-8xl font-extrabold text-purple-600 mb-4">
+            404
+          </p>
+
+          {/* Título Principal */}
+          <h1 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-4 leading-tight">
+            ¡Oops! Página No Encontrada
+          </h1>
+
+          {/* Descripción UX */}
+          <h3 className="text-lg text-gray-600 mb-8">
+            Lo sentimos, no pudimos encontrar la página que estás buscando.
+            Parece que el enlace está roto o la página ha sido eliminada.
+          </h3>
+
+          {/* Botones de Acción (UX: Opciones claras para el usuario) */}
+          <div className="flex flex-col sm:flex-row justify-center md:justify-start gap-4">
+            {/* CTA Principal: Volver a la Home (Morado) */}
+            <a
+              href="/" // En React, usaría <Link to="/">
+              className="flex items-center justify-center py-3 px-6 text-lg font-semibold text-white bg-purple-600 
+                         rounded-xl shadow-lg hover:bg-purple-700 transition duration-300 
+                         focus:outline-none focus:ring-4 focus:ring-purple-300 w-full sm:w-auto"
+            >
+              <FaHome className="mr-2" /> Volver a la Tienda
+            </a>
+
+            {/* CTA Secundario: Búsqueda (Outline) */}
+            <a
+              href="/search" // O la ruta de tu página de búsqueda
+              className="flex items-center justify-center py-3 px-6 text-lg font-semibold text-purple-600 
+                         bg-white border-2 border-purple-600 rounded-xl hover:bg-purple-50 transition duration-300 
+                         focus:outline-none focus:ring-4 focus:ring-purple-300 w-full sm:w-auto"
+            >
+              <FaSearch className="mr-2" /> Buscar Productos
+            </a>
+          </div>
         </div>
-        <img
-          className=" h-auto md:w-2/4 rounded-lg justify-center items-center"
-          src="https://i.pinimg.com/736x/54/dc/cd/54dccd2d2dcfc0ad9ace15432dc5ab14.jpg"
-          alt=""
-        />
-      </section>
-    </>
+
+        {/* Columna de Ilustración (Imagen más moderna y con estilo) */}
+        <div className="md:w-1/2 mt-12 md:mt-0 flex justify-center">
+          <img
+            className="w-full max-w-sm md:max-w-md h-auto rounded-3xl  object-cover"
+            // Recomiendo usar una ilustración moderna con el tema eCommerce/Búsqueda
+            src={img404}
+            alt="Ilustración de página no encontrada"
+          />
+        </div>
+      </div>
+    </section>
   );
 };

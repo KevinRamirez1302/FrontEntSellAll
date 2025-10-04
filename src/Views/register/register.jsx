@@ -50,7 +50,11 @@ export const Register = () => {
 
   const onSubmit = async (data) => {
     try {
-      await authSignup(data);
+      // Eliminar confirmPassword antes de enviar
+      const { confirmPassword, ...signupData } = data;
+
+      await authSignup(signupData);
+
       toast({
         title: 'Account created.',
         description: "We've created your account for you.",
@@ -59,13 +63,17 @@ export const Register = () => {
         isClosable: true,
       });
     } catch (error) {
-      toast({
-        title: 'Registration failed.',
-        description: 'Please check the information and try again.',
-        status: 'error',
-        duration: 5000,
-        isClosable: true,
-      });
+      // Solo mostrar toast si no hay errores de validación del backend
+      if (!signupErrors.length) {
+        toast({
+          title: 'Registration failed.',
+          description:
+            error.message || 'Please check the information and try again.',
+          status: 'error',
+          duration: 5000,
+          isClosable: true,
+        });
+      }
     }
   };
 
@@ -93,10 +101,10 @@ export const Register = () => {
             )}
 
             <FormInput
-              name="username"
-              placeholder="Username"
+              name="name"
+              placeholder="name"
               register={register}
-              error={errors.username}
+              error={errors.name}
             />
 
             <FormInput

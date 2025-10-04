@@ -60,29 +60,20 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     async function checkLogin() {
-      const cookies = Cookies.get();
-      if (!cookies.token) {
-        setLoading(false);
-        setIsAuthenticated(false);
-        setUser(null);
-        return;
-      }
-
       try {
-        const res = await verifyToken(cookies.token);
-        console.log();
-        if (!res.data) {
-          setIsAuthenticated(false);
-          setLoading(false);
-          return;
-        }
+        // No leas cookies con js-cookie
+        // Deja que el navegador las envíe automáticamente
+        const res = await verifyToken();
 
-        setIsAuthenticated(true);
-        setUser(res.data);
-        setLoading(false);
+        if (res.data) {
+          setIsAuthenticated(true);
+          setUser(res.data);
+        }
       } catch (err) {
+        console.log('Not authenticated');
         setIsAuthenticated(false);
         setUser(null);
+      } finally {
         setLoading(false);
       }
     }

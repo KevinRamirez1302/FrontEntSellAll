@@ -2,9 +2,9 @@ import { Button } from '@chakra-ui/react';
 // import { CarProduct } from '../PrivateViews/shoppinComponents/carProduct.jsx';
 import { UseShopCar } from '../../context/ShoppingContext.jsx';
 import { Link } from 'react-router-dom';
+import { FaTrashCan } from 'react-icons/fa6';
 import { FaShoppingCart, FaCreditCard, FaLock } from 'react-icons/fa'; // Iconos
 
-// Importaciones de imágenes
 import Mastercard from '/img/mastercard.png';
 import Visa from '/img/visa.png';
 import Binance from '/img/Binance-pay.jpg';
@@ -12,7 +12,7 @@ import American from '/img/american-express.png';
 import paypal from '/img/paypal.png';
 
 export const CarSection = () => {
-  const { allProduct, totalPrice } = UseShopCar();
+  const { allProduct, totalPrice, deleteProduct } = UseShopCar();
 
   // Constantes de precios
   const shippingCost = 1.99;
@@ -62,10 +62,16 @@ export const CarSection = () => {
                 <p className="font-semibold text-gray-800">{name}</p>
                 <p className="text-sm text-purple-600">{`Precio por unidad: ${displayValue(
                   price
-                )} | Cantidad: ${quantity}`}</p>
+                )} | Cantidad: ${quantity}$`}</p>
                 <p className="text-sm text-gray-500">{`Subtotal del producto: ${displayValue(
                   price * quantity
                 )}`}</p>
+                <button
+                  onClick={() => deleteProduct(_id)}
+                  className="text-red-500 hover:text-red-700"
+                >
+                  <FaTrashCan />
+                </button>
               </div>
             ))
           )}
@@ -86,11 +92,13 @@ export const CarSection = () => {
                   Subtotal ({allProduct.length}{' '}
                   {allProduct.length === 1 ? 'ítem' : 'ítems'}):
                 </p>
-                <p className="font-medium">{displayValue(subTotal)}</p>
+                <p className="font-medium">{displayValue(subTotal) + '$'}</p>
               </div>
               <div className="flex justify-between text-gray-700">
                 <p>Envío (Standard):</p>
-                <p className="font-medium">{displayValue(shippingCost)}</p>
+                <p className="font-medium">
+                  {displayValue(shippingCost) + '$'}
+                </p>
               </div>
             </div>
 
@@ -98,12 +106,11 @@ export const CarSection = () => {
             <div className="flex justify-between pt-4 border-t-2 border-purple-100">
               <p className="text-xl font-bold text-gray-900">Total:</p>
               <p className="text-2xl font-extrabold text-purple-700">
-                {displayValue(total)}
+                {displayValue(total) + '$'}
               </p>
             </div>
           </div>
 
-          {/* Botón de Checkout (CTA principal) */}
           <Button
             className="w-full text-white font-bold"
             colorScheme="purple"

@@ -1,28 +1,22 @@
-import { FaTrashCan } from 'react-icons/fa6'
-import { UseShopCar } from '../../../context/ShoppingContext'
+import { FaTrashCan } from 'react-icons/fa6';
+import { UseShopCar } from '../../../context/ShoppingContext';
 
 export const CarProduct = (props) => {
-  const { deleteProduct } = UseShopCar()
+  const { deleteProduct } = UseShopCar();
   return (
     <>
       <div
-        key={props.id}
-        className="flex items-center p-4  bg-white  border-y-2 "
+        key={_id}
+        className="bg-white p-4 rounded-xl flex justify-center gap-2 items-center shadow-md border border-gray-100 transition duration-300 hover:shadow-lg"
       >
-        <figure>
-          <img
-            src={props.image}
-            alt={props.name}
-            className="h-16 w-16 flex-shrink-0 object-cover rounded-md"
-          />
-        </figure>
-
-        <div className="m-4 pl-8 pr-8 flex-1 ">
-          <p className="text-lg font-semibold">{props.name}</p>
-          <p className="text-gray-500">
-            ${props.price} x {props.quantity}
-          </p>
-        </div>
+        <img className="w-20" src={image} alt="" />
+        <p className="font-semibold text-gray-800">{name}</p>
+        <p className="text-sm text-purple-600">{`Precio por unidad: ${displayValue(
+          price
+        )} | Cantidad: ${quantity}$`}</p>
+        <p className="text-sm text-gray-500">{`Subtotal del producto: ${displayValue(
+          price * quantity
+        )}`}</p>
         <button
           onClick={() => deleteProduct(props.id)}
           className="text-red-500 hover:text-red-700"
@@ -31,5 +25,5 @@ export const CarProduct = (props) => {
         </button>
       </div>
     </>
-  )
-}
+  );
+};

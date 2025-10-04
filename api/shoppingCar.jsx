@@ -1,5 +1,5 @@
-import axios from '../api/axios';
+import instance from './axios';
 
-export const addShoppinCar = (product) => axios.post(`addItem`, product);
-export const getProduct = () => axios.get(`getCar`);
-export const deleteItem = (id) => axios.delete(`deleteItem/${id}`);
+export const addShoppinCar = (product) => instance.post(`addItem`, product);
+export const getProduct = () => instance.get(`getCar`);
+export const deleteItem = (id) => instance.delete(`deleteItem/${id}`);

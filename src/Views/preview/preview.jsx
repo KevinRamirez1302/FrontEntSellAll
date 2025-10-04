@@ -102,14 +102,6 @@ export const ProductPreview = () => {
                   )
                 )}
               </div>
-
-              {/* [TALLA ELIMINADA] */}
-
-              {/* Cantidad (Opcional, se puede añadir un selector numérico simple aquí) */}
-              {/* <div className="flex items-center">
-                <span className="mr-3 font-semibold text-gray-800">Cantidad:</span>
-                <input type="number" defaultValue="1" min="1" className="w-20 border border-gray-300 rounded-lg py-2 text-center focus:border-purple-500 focus:ring-1 focus:ring-purple-500" />
-              </div> */}
             </div>
 
             {/* Acciones (CTA) */}

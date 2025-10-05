@@ -1,5 +1,12 @@
 import { useState, useEffect } from 'react';
-import { Select, Stack } from '@chakra-ui/react';
+import {
+  Select,
+  Stack,
+  HStack,
+  Skeleton,
+  SkeletonCircle,
+  SkeletonText,
+} from '@chakra-ui/react';
 import { FaBoxes } from 'react-icons/fa'; // Icono para el título
 import instance from '../../../api/axios'; // Mantener tu importación de axios
 import { Card } from '../CardProduct/Card'; // Mantener tu importación de Card

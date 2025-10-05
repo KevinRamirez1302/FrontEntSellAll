@@ -61,8 +61,6 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     async function checkLogin() {
       try {
-        // No leas cookies con js-cookie
-        // Deja que el navegador las envíe automáticamente
         const res = await verifyToken();
 
         if (res.data) {

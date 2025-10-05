@@ -50,20 +50,10 @@ export const Register = () => {
 
   const onSubmit = async (data) => {
     try {
-      // Eliminar confirmPassword antes de enviar
       const { confirmPassword, ...signupData } = data;
 
       await authSignup(signupData);
-
-      toast({
-        title: 'Account created.',
-        description: "We've created your account for you.",
-        status: 'success',
-        duration: 5000,
-        isClosable: true,
-      });
     } catch (error) {
-      // Solo mostrar toast si no hay errores de validación del backend
       if (!signupErrors.length) {
         toast({
           title: 'Registration failed.',

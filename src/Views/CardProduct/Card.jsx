@@ -20,7 +20,10 @@ export const Card = (props) => {
   };
 
   return (
-    <div className="group relative w-full max-w-xs mx-auto flex flex-col bg-white rounded-2xl shadow-md hover:shadow-2xl transition-all duration-500 ease-out transform hover:-translate-y-1 overflow-hidden border border-gray-100">
+    <div
+      loa
+      className="group relative w-full max-w-xs mx-auto flex flex-col bg-white rounded-2xl shadow-md hover:shadow-2xl transition-all duration-500 ease-out transform hover:-translate-y-1 overflow-hidden border border-gray-100"
+    >
       {/* Badge y botón favorito */}
       <div className="absolute top-3 left-3 right-3 z-10 flex justify-between items-start">
         <div className="bg-gradient-to-r from-purple-500 to-pink-500 text-white text-xs font-bold px-3 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -31,7 +34,6 @@ export const Card = (props) => {
         </button>
       </div>
 
-      {/* Imagen del producto */}
       <Link to={`/products/${props.id}`} className="block">
         <div className="relative aspect-square overflow-hidden bg-gray-50">
           {!imageLoaded && !imageError && (
@@ -63,6 +65,7 @@ export const Card = (props) => {
             </div>
           ) : (
             <img
+              loading="lazy"
               className={`w-full h-full object-cover object-center transition-all duration-700 group-hover:scale-110 ${
                 imageLoaded ? 'opacity-100' : 'opacity-0'
               }`}

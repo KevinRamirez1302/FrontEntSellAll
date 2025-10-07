@@ -1,24 +1,14 @@
-import { useState, useEffect } from 'react';
-import {
-  Select,
-  Stack,
-  HStack,
-  Skeleton,
-  SkeletonCircle,
-  SkeletonText,
-} from '@chakra-ui/react';
-import { FaBoxes } from 'react-icons/fa'; // Icono para el título
-import instance from '../../../api/axios'; // Mantener tu importación de axios
-import { Card } from '../CardProduct/Card'; // Mantener tu importación de Card
-
-// Simulación de instancia y Card para que el código sea funcional en este contexto
+import { useState, useEffect, lazy } from 'react';
+import { Select, Stack } from '@chakra-ui/react';
+import { FaBoxes } from 'react-icons/fa';
+import instance from '../../../api/axios';
+import { Card } from '../CardProduct/Card.jsx';
 
 export const AllProducts = () => {
   const [data, setData] = useState([]);
   const [category, setCategory] = useState('');
   const [isLoading, setIsLoading] = useState(true);
 
-  // Lógica de carga corregida: se ejecuta solo cuando 'category' cambia
   useEffect(() => {
     const fetchProducts = async () => {
       setIsLoading(true);
@@ -28,7 +18,6 @@ export const AllProducts = () => {
             ? 'allProducts'
             : `allProducts/category/${category}`;
 
-        // Usar instance de axios para la llamada
         const response = await instance.get(url);
         setData(response.data);
       } catch (error) {
@@ -40,15 +29,13 @@ export const AllProducts = () => {
     };
 
     fetchProducts();
-  }, [category]); // Ejecutar cada vez que la categoría cambie
+  }, [category]);
 
-  // --- Renderizado del componente ---
   return (
     <section className="bg-white py-16 md:py-24 min-h-screen">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* 1. Encabezado y Filtros (Sticky para mejor UX) */}
+        {/* Header y Filtros */}
         <div className="sticky top-0 z-10 bg-white/90 backdrop-blur-md pb-8 mb-8 border-b border-gray-100">
-          {/* Título y Subtítulo */}
           <div className="text-center mb-6">
             <h2 className="text-4xl font-extrabold text-gray-900 mb-2 flex items-center justify-center">
               <FaBoxes className="mr-3 text-purple-600" /> Explorar Productos
@@ -58,7 +45,6 @@ export const AllProducts = () => {
             </p>
           </div>
 
-          {/* Selector de Categoría (Moderno con color de marca) */}
           <div className="flex justify-center">
             <Stack width={{ base: 'full', sm: 'md' }}>
               <Select
@@ -67,9 +53,8 @@ export const AllProducts = () => {
                 focusBorderColor="purple.500"
                 variant="outline"
                 className="shadow-sm border-gray-300"
-                // El onChange se aplica directamente aquí, no en la <section>
                 onChange={(e) => setCategory(e.target.value)}
-                value={category} // Controlar el valor del select
+                value={category}
               >
                 <option value="all">Todas las categorías</option>
                 <option value="short">Shorts</option>
@@ -83,14 +68,14 @@ export const AllProducts = () => {
           </div>
         </div>
 
-        {/* 2. Área de Contenido: Carga, Grid y Sin Datos */}
+        {/* Contenido */}
         {isLoading ? (
-          // Estado de Carga Moderno
+          // Estado de Carga
           <div className="flex justify-center items-center py-20">
             <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-purple-600"></div>
           </div>
         ) : data.length === 0 ? (
-          // Mensaje "Sin Datos" Estilizado
+          // Sin Datos
           <div className="text-center py-16 lg:col-span-4 col-span-full">
             <div className="text-center py-16 bg-gray-50 border-2 border-dashed border-purple-200 rounded-xl">
               <div className="w-16 h-16 mx-auto mb-6 bg-purple-50 rounded-full flex items-center justify-center">
@@ -105,7 +90,6 @@ export const AllProducts = () => {
             </div>
           </div>
         ) : (
-          // Grid de Productos
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 md:gap-8">
             {data.map((product) => (
               <div

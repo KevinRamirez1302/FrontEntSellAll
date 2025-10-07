@@ -37,32 +37,21 @@ export const ShopCarProvider = ({ children }) => {
       setAllProduct(data);
     } catch (error) {
       console.error('Error al obtener productos del carrito:', error);
-      toast({
-        title: 'Error de Conexión',
-        description: 'No se pudieron cargar los productos del carrito.',
-        status: 'error',
-        isClosable: true,
-      });
     } finally {
       setLoading(false);
     }
-  }, [toast]);
+  }, []);
 
-  // CORRECCIÓN CRÍTICA:
-  // EL BUCLE INFINITO estaba en: useEffect(() => { ... }, [allProduct]);
-  // `allProduct` cambia en cada render, lo que fuerza a `useEffect` a volver a ejecutarse
-  // La dependencia debe ser `fetchProducts` (definida con `useCallback`)
   useEffect(() => {
     fetchProducts();
   }, [fetchProducts]);
 
   // Cálculo de Precio Total
   const totalPrice = () => {
-    // Se añade un check para evitar errores si allProduct no es un array
     if (!Array.isArray(allProduct)) return '0.00';
 
     const total = allProduct
-      .map(({ price }) => price || 0) // Se asegura que price exista o sea 0
+      .map(({ price }) => price || 0)
       .reduce((acc, val) => acc + val, 0);
 
     return total.toFixed(2);
@@ -73,7 +62,6 @@ export const ShopCarProvider = ({ children }) => {
     try {
       await addShoppinCar(newProduct);
 
-      // 1. Mostrar Toast
       toast({
         title: `Producto Agregado`,
         status: 'success',
@@ -81,9 +69,6 @@ export const ShopCarProvider = ({ children }) => {
       });
 
       // 2. ACTUALIZAR la lista de productos
-      // En lugar de volver a llamar a la API, la práctica más eficiente es
-      // agregar el producto localmente si la API lo permite, o hacer un re-fetch.
-      // Aquí usamos re-fetch para asegurar que el servidor es la fuente de verdad:
       await fetchProducts();
     } catch (err) {
       console.error('Producto no pudo ser agregado:', err);
@@ -101,25 +86,16 @@ export const ShopCarProvider = ({ children }) => {
     try {
       const res = await deleteItem(id);
 
-      // 1. Mostrar Toast
       toast({
         title: `Producto Eliminado`,
         status: 'success',
         isClosable: true,
       });
 
-      // 2. ACTIVAR actualización desde el servidor para evitar discrepancias
-      // (más seguro que filtrar localmente, y evita bugs por _id vs id)
       await fetchProducts();
 
-      // Log response for debugging (helps detect if server cleared auth cookie)
-      // eslint-disable-next-line no-console
       console.log('deleteItem response:', res && res.status ? res.status : res);
     } catch (error) {
-      // If the request is unauthorized, surface a clear toast. Do NOT mutate
-      // auth state here; the AuthProvider is responsible for session state.
-      // Logging the full error helps debugging server behavior (e.g., Set-Cookie).
-      // eslint-disable-next-line no-console
       console.error('Error al eliminar producto:', error);
 
       if (error?.response?.status === 401) {
@@ -147,8 +123,8 @@ export const ShopCarProvider = ({ children }) => {
         allProduct,
         deleteProduct,
         totalPrice,
-        loading, // Se añade el estado de carga
-        fetchProducts, // Se expone la función si se necesita refrescar el carrito manualmente
+        loading,
+        fetchProducts,
       }}
     >
       {children}

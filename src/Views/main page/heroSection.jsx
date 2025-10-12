@@ -1,4 +1,4 @@
-import hero from '/img/hero.jpg';
+import { assets } from '../../assets/assets';
 
 export const HeroSection = () => {
   return (
@@ -49,7 +49,7 @@ export const HeroSection = () => {
           <img
             className="w-full max-w-xl h-auto rounded-3xl object-cover 
                        aspect-video md:aspect-square transform transition duration-500 hover:scale-[1.01]"
-            src={hero}
+            src={assets.Hero}
             alt="Shopping Illustration"
           />
         </div>

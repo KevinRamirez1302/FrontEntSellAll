@@ -1,29 +1,42 @@
-import { UseAuth } from '../../context/AuthContext';
+// src/components/Profile.jsx
+
 import {
-  Input,
+  Avatar,
+  Box,
   Button,
-  Stack,
-  useToast,
+  Card,
+  CardBody,
+  CardFooter,
+  CardHeader,
+  Flex,
   FormControl,
   FormLabel,
   Heading,
-  Box,
-  Flex,
+  HStack,
+  IconButton,
+  Input,
+  InputGroup,
+  InputLeftElement,
+  Stack,
+  Text,
+  useToast,
+  VStack,
 } from '@chakra-ui/react';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { FiEdit, FiMail, FiUser, FiSave, FiX } from 'react-icons/fi';
+import { UseAuth } from '../../context/AuthContext';
 
 export const Profile = () => {
-  const { user, updateUserProfile } = UseAuth(); // Supongamos que tienes una función para actualizar
+  const { user, updateUserProfile } = UseAuth();
   const toast = useToast();
 
-  // 1. Manejo de estado para la edición
   const [isEditing, setIsEditing] = useState(false);
+
   const [profileData, setProfileData] = useState({
     name: '',
     email: '',
   });
 
-  // 2. Sincronizar el estado local con los datos del usuario al cargar
   useEffect(() => {
     if (user) {
       setProfileData({
@@ -33,6 +46,16 @@ export const Profile = () => {
     }
   }, [user]);
 
+  const handleCancel = () => {
+    setIsEditing(false);
+    if (user) {
+      setProfileData({
+        name: user.name || '',
+        email: user.email || '',
+      });
+    }
+  };
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setProfileData((prevState) => ({ ...prevState, [name]: value }));
@@ -40,103 +63,144 @@ export const Profile = () => {
 
   const handleSave = async () => {
     try {
-      // 3. Lógica para guardar los datos (simulación)
-      // await updateUserProfile(profileData);
-
       toast({
-        title: 'Perfil actualizado.',
-        description: 'Tu información ha sido guardada con éxito.',
+        title: 'Perfil actualizado',
+        description: 'Tus datos se han guardado correctamente.',
         status: 'success',
-        duration: 5000,
+        duration: 3000,
         isClosable: true,
+        position: 'top',
       });
-      setIsEditing(false);
+      setIsEditing(false); // Salir del modo edición
     } catch (error) {
       toast({
-        title: 'Error al actualizar.',
-        description: 'No se pudo guardar la información. Inténtalo de nuevo.',
+        title: 'Error al actualizar',
+        description: 'No se pudieron guardar los cambios. Inténtalo de nuevo.',
         status: 'error',
         duration: 5000,
         isClosable: true,
+        position: 'top',
       });
     }
   };
 
-  return (
-    <Box p={10} maxW="container.md" mx="auto">
-      <Flex direction="column" alignItems="center" mb={10}>
-        <img
-          className="w-28 h-28 object-cover rounded-full shadow-lg"
-          src="https://cdn.pixabay.com/photo/2023/05/08/09/33/cat-7978052_1280.jpg"
-          alt="User Profile Picture"
-        />
-        <Heading as="h1" size="xl" mt={4} color="gray.700">
-          Welcome {user?.name?.toUpperCase() || ''}
-        </Heading>
+  if (!user) {
+    return (
+      <Flex justify="center" align="center" h="100vh">
+        <Text>Cargando perfil...</Text>
       </Flex>
+    );
+  }
 
-      <Heading as="h2" size="lg" mb={6} color="gray.600" textAlign="center">
-        Tu Información de Perfil
-      </Heading>
-
-      <Stack spacing={5}>
-        <FormControl id="name">
-          <FormLabel>Nombre de Usuario</FormLabel>
-          <Input
-            name="name"
-            value={profileData.name}
-            onChange={handleInputChange}
-            isReadOnly={!isEditing} // Controla si es editable
-            variant={isEditing ? 'outline' : 'filled'}
-            placeholder="Nombre de usuario"
-          />
-        </FormControl>
-
-        <FormControl id="email">
-          <FormLabel>Correo Electrónico</FormLabel>
-          <Input
-            name="email"
-            value={profileData.email}
-            onChange={handleInputChange}
-            isReadOnly={!isEditing}
-            variant={isEditing ? 'outline' : 'filled'}
-            type="email"
-            placeholder="Correo electrónico"
-          />
-        </FormControl>
-
-        <FormControl id="id">
-          <FormLabel>ID de Usuario</FormLabel>
-          <Input value={user?.id || ''} isReadOnly variant="filled" />{' '}
-          {/* Este campo es solo lectura */}
-        </FormControl>
-
-        <Flex justify="center" mt={6}>
-          {isEditing ? (
-            <>
-              <Button colorScheme="purple" onClick={handleSave} mr={3}>
-                Guardar Cambios
-              </Button>
-              <Button
+  return (
+    <Flex className="p-[12%]" align="center" justify="center" w="100%">
+      <Card maxW="lg" w="100%" borderRadius="xl" boxShadow="lg">
+        <CardHeader borderBottomWidth="1px" borderColor="gray.200">
+          <HStack spacing={4} justify="space-between">
+            <HStack spacing={4}>
+              <Avatar
+                size="lg"
+                name={user.name || ''}
+                src={user.profilePictureUrl || ''} // Usa una URL real si la tienes
+              />
+              <VStack align="flex-start" spacing={0}>
+                <Heading as="h2" size="md">
+                  {profileData.name}
+                </Heading>
+                <Text color="gray.500">{profileData.email}</Text>
+              </VStack>
+            </HStack>
+            {!isEditing && (
+              <IconButton
+                icon={<FiEdit />}
+                isRound
                 variant="ghost"
-                onClick={() => {
-                  setIsEditing(false);
-                  setProfileData({
-                    name: user.name || '',
-                    email: user.email || '',
-                  });
-                }}
-              >
+                aria-label="Editar Perfil"
+                onClick={() => setIsEditing(true)}
+              />
+            )}
+          </HStack>
+        </CardHeader>
+
+        <CardBody>
+          <Stack spacing={6}>
+            <Heading as="h3" size="sm" color="gray.600">
+              INFORMACIÓN PERSONAL
+            </Heading>
+
+            <FormControl id="name">
+              <FormLabel>Nombre de Usuario</FormLabel>
+              <InputGroup>
+                <InputLeftElement pointerEvents="none">
+                  <FiUser color="gray.300" />
+                </InputLeftElement>
+                <Input
+                  name="name"
+                  value={profileData.name}
+                  onChange={handleInputChange}
+                  isReadOnly={!isEditing}
+                  variant={isEditing ? 'outline' : 'filled'}
+                  _readOnly={{
+                    bg: 'gray.50',
+                    cursor: 'default',
+                    border: 'none',
+                  }}
+                />
+              </InputGroup>
+            </FormControl>
+
+            <FormControl id="email">
+              <FormLabel>Correo Electrónico</FormLabel>
+              <InputGroup>
+                <InputLeftElement pointerEvents="none">
+                  <FiMail color="gray.300" />
+                </InputLeftElement>
+                <Input
+                  name="email"
+                  type="email"
+                  value={profileData.email}
+                  onChange={handleInputChange}
+                  isReadOnly={!isEditing}
+                  variant={isEditing ? 'outline' : 'filled'}
+                  _readOnly={{
+                    bg: 'gray.50',
+                    cursor: 'default',
+                    border: 'none',
+                  }}
+                />
+              </InputGroup>
+            </FormControl>
+
+            <FormControl id="id">
+              <FormLabel>ID de Usuario</FormLabel>
+              <Input
+                value={user.id || 'No disponible'}
+                isReadOnly
+                variant="filled"
+                bg="gray.100"
+                cursor="not-allowed"
+              />
+            </FormControl>
+          </Stack>
+        </CardBody>
+
+        {isEditing && (
+          <CardFooter>
+            <HStack w="100%" justify="flex-end">
+              <Button variant="ghost" leftIcon={<FiX />} onClick={handleCancel}>
                 Cancelar
               </Button>
-            </>
-          ) : (
-            <Button colorScheme="purple" onClick={() => setIsEditing(true)}>
-              Editar Perfil
-            </Button>
-          )}
-        </Flex>
-      </Stack>
-    </Box>
+              <Button
+                colorScheme="purple"
+                leftIcon={<FiSave />}
+                onClick={handleSave}
+              >
+                Guardar Cambios
+              </Button>
+            </HStack>
+          </CardFooter>
+        )}
+      </Card>
+    </Flex>
   );
 };

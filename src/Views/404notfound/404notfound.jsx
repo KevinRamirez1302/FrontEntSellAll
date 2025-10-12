@@ -1,13 +1,10 @@
 import { FaHome, FaSearch } from 'react-icons/fa';
-import img404 from '/img/notfound.jpg'; // Asegúrate de tener esta imagen en la ruta correcta
+import { assets } from '../../assets/assets';
 
 export const Notfound = () => {
   return (
-    // Contenedor principal: Centrado en la vista (pantalla completa)
     <section className="min-h-screen flex items-center justify-center bg-gray-50 py-12 md:py-24">
-      {/* Contenedor de contenido: Ancho máximo y centrado */}
       <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-12">
-        {/* Columna de Texto y CTA (Orden 1 en móvil/escritorio) */}
         <div className="md:w-1/2 text-center md:text-left">
           {/* Código de Error (Destacado y Morado) */}
           <p className="text-6xl sm:text-7xl lg:text-8xl font-extrabold text-purple-600 mb-4">
@@ -54,7 +51,7 @@ export const Notfound = () => {
           <img
             className="w-full max-w-sm md:max-w-md h-auto rounded-3xl  object-cover"
             // Recomiendo usar una ilustración moderna con el tema eCommerce/Búsqueda
-            src={img404}
+            src={assets.NotFound}
             alt="Ilustración de página no encontrada"
           />
         </div>

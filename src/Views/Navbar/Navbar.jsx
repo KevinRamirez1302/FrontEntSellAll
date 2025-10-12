@@ -1,4 +1,4 @@
-import navSvg from '/img/logo-color.svg';
+import Logo from '/logo.jpg';
 import { useState, useEffect } from 'react';
 import { UseAuth } from '../../../context/AuthContext.jsx';
 import { Link } from 'react-router-dom';
@@ -31,7 +31,6 @@ export const Navbar = () => {
     return () => window.removeEventListener('keydown', handleEscape);
   }, [open]);
 
-  // Prevenir scroll cuando sidebar está abierto
   useEffect(() => {
     if (open) {
       document.body.style.overflow = 'hidden';
@@ -61,7 +60,7 @@ export const Navbar = () => {
       >
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
           <Link to="/" className="flex items-center" aria-label="SellAll Home">
-            <img src={navSvg} className="h-8 mr-3 rounded" alt="SellAll Logo" />
+            <img src={Logo} className="h-8 mr-3 rounded" alt="SellAll Logo" />
             <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
               SellAll
             </span>

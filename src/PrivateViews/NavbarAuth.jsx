@@ -1,4 +1,4 @@
-import navSvg from '/img/logo-color.svg';
+import navSvg from './logo.jpg';
 import { SideBar } from '../sidebar/sidebar.jsx';
 import { useState } from 'react';
 

@@ -1,11 +1,8 @@
-import comercio from '/img/comercio.jpeg';
-import { AiFillFire } from 'react-icons/ai';
-import { FaBolt, FaMagic } from 'react-icons/fa'; // Importamos mejores iconos para más claridad
+import { assets } from '../../assets/assets';
+import { FaBolt, FaMagic } from 'react-icons/fa';
 
 export const AboutUs = () => {
-  // Corregido: 'AboutuS' a 'AboutUs' por convención
   return (
-    // Sección principal con max-width, centrado y padding vertical
     <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 md:py-24 font-sans">
       {/* Contenedor de dos columnas con espaciado 'gap' consistente */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
@@ -14,7 +11,7 @@ export const AboutUs = () => {
           <img
             className="w-full max-w-md md:max-w-lg h-auto rounded-3xl shadow-2xl object-cover 
                        aspect-square transform transition duration-500 hover:scale-[1.01]"
-            src={comercio}
+            src={assets.Comercio}
             alt="Ilustración de comercio electrónico o equipo"
           />
         </div>

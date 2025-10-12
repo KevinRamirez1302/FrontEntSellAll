@@ -1,13 +1,11 @@
-import { Input, Button, Stack, Select } from '@chakra-ui/react';
-import { FaWallet } from 'react-icons/fa'; // Icono para el encabezado
+import { Button, Stack, Select } from '@chakra-ui/react';
+import { FaWallet } from 'react-icons/fa';
 import { useState } from 'react';
 import { CardPaymentForm } from './CardPayment';
 
-// formulario de la tarjeta
-
 export const Payment = () => {
   const [cardNumber, setCardNumber] = useState('');
-  const [method, setMethod] = useState('Card'); // Valor por defecto a 'Card'
+  const [method, setMethod] = useState('Card');
 
   const handlePay = () => {
     console.log('Procesando pago con tarjeta:', cardNumber);
@@ -24,7 +22,7 @@ export const Payment = () => {
 
         <form
           onSubmit={(e) => {
-            e.preventDefault(); /* handlePay se llama en el botón */
+            e.preventDefault();
           }}
         >
           {/* Selector de Método de Pago */}

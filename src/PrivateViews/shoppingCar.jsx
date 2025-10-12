@@ -1,15 +1,9 @@
 import { Button } from '@chakra-ui/react';
-// import { CarProduct } from '../PrivateViews/shoppinComponents/carProduct.jsx';
 import { UseShopCar } from '../../context/ShoppingContext.jsx';
 import { Link } from 'react-router-dom';
 import { FaTrashCan } from 'react-icons/fa6';
-import { FaShoppingCart, FaCreditCard, FaLock } from 'react-icons/fa'; // Iconos
-
-import Mastercard from '/img/mastercard.png';
-import Visa from '/img/visa.png';
-import Binance from '/img/Binance-pay.jpg';
-import American from '/img/american-express.png';
-import paypal from '/img/paypal.png';
+import { FaShoppingCart, FaCreditCard, FaLock } from 'react-icons/fa';
+import { assets } from '../assets/assets.js';
 
 export const CarSection = () => {
   const { allProduct, totalPrice, deleteProduct } = UseShopCar();
@@ -30,13 +24,11 @@ export const CarSection = () => {
 
   return (
     <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 md:py-20 bg-gray-50 min-h-screen">
-      {/* Título de la Sección */}
       <h1 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-8 md:mb-12 flex items-center">
         <FaShoppingCart className="mr-3 text-purple-600" /> Tu Carrito de
         Compras
       </h1>
 
-      {/* Layout de dos columnas (responsive y sticky) */}
       <div className="flex flex-col lg:flex-row gap-10">
         {/* Columna 1: Lista de Productos */}
         <div className="w-full lg:w-7/12 space-y-6">
@@ -77,9 +69,7 @@ export const CarSection = () => {
           )}
         </div>
 
-        {/* Columna 2: Resumen y Checkout (Sticky) */}
         <div className="w-full lg:w-5/12 lg:sticky lg:top-8 h-fit space-y-6">
-          {/* Bloque de Resumen del Pedido (Estilo Premium Morado) */}
           <div className="bg-white p-6 rounded-xl shadow-2xl border-t-4 border-purple-600">
             <h2 className="text-2xl font-extrabold text-gray-900 mb-6 border-b pb-3">
               Resumen del Pedido
@@ -136,27 +126,27 @@ export const CarSection = () => {
             <div className="w-full flex flex-wrap justify-center items-center gap-4 opacity-80">
               <img
                 className="h-6 w-auto object-contain"
-                src={Mastercard}
+                src={assets.Mastercard}
                 alt="Mastercard"
               />
               <img
                 className="h-6 w-auto object-contain"
-                src={Visa}
+                src={assets.Visa}
                 alt="Visa"
               />
               <img
                 className="h-6 w-auto object-contain"
-                src={American}
+                src={assets.American}
                 alt="American Express"
               />
               <img
                 className="h-6 w-auto object-contain"
-                src={paypal}
+                src={assets.Paypal}
                 alt="PayPal"
               />
               <img
                 className="h-6 w-auto object-contain"
-                src={Binance}
+                src={assets.Binance}
                 alt="Binance Pay"
               />
             </div>

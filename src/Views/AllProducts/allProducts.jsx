@@ -1,4 +1,4 @@
-import { useState, useEffect, lazy } from 'react';
+import { useState, useEffect } from 'react';
 import { Select, Stack } from '@chakra-ui/react';
 import { FaBoxes } from 'react-icons/fa';
 import instance from '../../../api/axios';

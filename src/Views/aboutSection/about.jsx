@@ -1,4 +1,4 @@
-import empresa from '/img/empresa.jpg';
+import { assets } from '../../assets/assets';
 
 export const AboutSection = () => {
   return (
@@ -53,7 +53,7 @@ export const AboutSection = () => {
             // Estilo Minimalista: Sin sombras pesadas, bordes definidos, enfoque en la forma
             className="w-full max-w-xs h-auto object-cover object-center rounded-lg border-2 border-gray-100 
                        aspect-square transform transition duration-500 hover:border-purple-300"
-            src={empresa}
+            src={assets.Empresa}
             alt="Ilustración minimalista"
           />
         </div>
